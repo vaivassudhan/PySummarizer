@@ -1,16 +1,20 @@
-import speech_recognition as sr 
-r = sr.Recognizer()  
-while(1):     
-    try: 
-        r.adjust_for_ambient_noise(source2, duration=0.5) 
-        audio2 = r.listen(source2) 
-        MyText = r.recognize_google(audio2) 
-        MyText = MyText.lower() 
+import os
+import speech_recognition as sr
+from multi_rake import Rake
+import nltk 
+from nltk.corpus import stopwords 
+from nltk.tokenize import word_tokenize, sent_tokenize 
 
-        print(MyText) 
-              
-    except sr.RequestError as e: 
-        print("Could not request results; {0}".format(e)) 
-          
-    except sr.UnknownValueError: 
-        print("unknown error occured") 
+com1="ffmpeg -i demo.mp4 demo.mp3"
+com2= "ffmpeg -i demo.mp3 demo.wav"
+os.system(com1)
+os.system(com2)
+r = sr.Recognizer()
+audio = sr.AudioFile('demo.wav')
+with audio as source:
+    audio = r.record(source, duration=100)
+text=(r.recognize_google(audio))
+
+print()
+print()
+print(text)
